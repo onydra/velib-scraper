@@ -15,13 +15,18 @@ console.log('Starting cron job for : ' + prettycron.toString(cronString))
 cron.schedule(cronString, async function () {
   console.log('---------------------')
   console.log('Running Cron Job')
+  console.log('Getting snapshot ...')
   const snapshot = await getSnapshot()
   if (snapshot === null) {
     console.log('Impossible to get snapshot, aborting current job')
     return
   }
+  console.log('Snapshot received')
   const snapshotTimestamp = snapshot.lastUpdatedOther
-  fs.writeFileSync(`./snapshots/${snapshotTimestamp}.json`, JSON.stringify(snapshot))
+  const snapshotFilename = `${snapshotTimestamp}.json`
+  console.log('Saving snapshot : ' + snapshotFilename)
+  fs.writeFileSync(`./snapshots/${snapshotFilename}`, JSON.stringify(snapshot))
+  console.log('Snapshot Saved')
 })
 
 async function getSnapshot () {
