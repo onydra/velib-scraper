@@ -9,7 +9,7 @@ console.log('Starting server ...')
 
 const app = express()
 
-const cronString = '* * * * *'
+const cronString = '0 * * * *'
 
 console.log('Starting cron job for : ' + prettycron.toString(cronString))
 cron.schedule(cronString, async function () {
