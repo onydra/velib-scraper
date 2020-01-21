@@ -1,0 +1,19 @@
+{
+  "name": "valib-scraper",
+  "version": "1.0.0",
+  "description": "A node.js application used to periodically query and store velib realtime data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Onydra (nayrrod@gmail.com)",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "node-cron": "^2.0.3",
+    "prettycron": "^0.10.0"
+  }
+}
