@@ -1,5 +1,5 @@
 {
-  "name": "valib-scraper",
+  "name": "velib-scraper",
   "version": "1.0.0",
   "description": "A node.js application used to periodically query and store velib realtime data",
   "main": "index.js",
