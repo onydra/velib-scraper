@@ -28,7 +28,11 @@ cron.schedule(cronTab, async function () {
   const snapshotTimestamp = snapshot.lastUpdatedOther
   const snapshotFilename = `${snapshotTimestamp}.json`
   console.log('Saving snapshot : ' + snapshotFilename)
-  fs.writeFileSync(`./snapshots/${snapshotFilename}`, JSON.stringify(snapshot))
+  try {
+    fs.writeFileSync(`./snapshots/${snapshotFilename}`, JSON.stringify(snapshot))
+  } catch (err) {
+    console.log(`Error writing file ${snapshotFilename}: ${err}`)
+  }
   console.log('Snapshot Saved')
 })
 
