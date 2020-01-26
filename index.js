@@ -9,10 +9,13 @@ console.log('Starting server ...')
 
 const app = express()
 
-const cronString = '0 * * * *'
+const cronTab = process.env.CRONTAB || '0 * * * *'
+const port = process.env.PORT || 3000
 
-console.log('Starting cron job for : ' + prettycron.toString(cronString))
-cron.schedule(cronString, async function () {
+console.log(process.env)
+
+console.log('Starting cron job for : ' + prettycron.toString(cronTab))
+cron.schedule(cronTab, async function () {
   console.log('---------------------')
   console.log('Running Cron Job')
   console.log('Getting snapshot ...')
@@ -39,7 +42,6 @@ async function getSnapshot () {
     return null
   }
 }
+app.listen(port)
 
-app.listen(process.env.PORT)
-
-console.log('Server listening on port ' + process.env.PORT)
+console.log(`Server listening on port ${process.env.PORT}`)
