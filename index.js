@@ -12,6 +12,7 @@ const app = express()
 
 const cronTab = process.env.CRONTAB || '0 * * * *'
 const port = process.env.PORT || 3000
+const snapshotsPath = process.env.SNAPHOTS_PATH || './snapshots/'
 
 async function getSnapshot () {
   const url = 'https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_status.json'
@@ -27,7 +28,7 @@ async function getSnapshot () {
 function readSnapshotFiles () {
   let files
   try {
-    files = fs.readdirSync('./snapshots')
+    files = fs.readdirSync(snapshotsPath)
   } catch (err) {
     // An error occurred
     console.error(err)
@@ -54,7 +55,7 @@ cron.schedule(cronTab, async function () {
   const snapshotFilename = `${snapshotTimestamp}.json`
   console.log('Saving snapshot : ' + snapshotFilename)
   try {
-    fs.writeFileSync(`./snapshots/${snapshotFilename}`, JSON.stringify(snapshot))
+    fs.writeFileSync(`${snapshotsPath}${snapshotFilename}`, JSON.stringify(snapshot))
   } catch (err) {
     console.error(`Error writing file ${snapshotFilename}: ${err}`)
   }
@@ -63,7 +64,7 @@ cron.schedule(cronTab, async function () {
 
 app.get('/snapshots', (req, res) => {
   const fileNames = readSnapshotFiles()
-  const rawFiles = fileNames.map(filename => fs.readFileSync(`./snapshots/${filename}`))
+  const rawFiles = fileNames.map(filename => fs.readFileSync(`${snapshotsPath}${filename}`))
   const data = rawFiles.map(rawFile => JSON.parse(rawFile))
   res.json(data)
 })
